@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Freelancer Pricing Platform</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
+</head>
+<body>
+    <header>
+        <div class="logo-container">
+            <img id="company-logo" src="assets/logo.png" alt="Company Logo">
+            <h1>Freelancer Pricing Platform</h1>
+        </div>
+        <div id="user-profile" class="user-profile">
+            <!-- User login status will appear here -->
+        </div>
+    </header>
+
+    <main>
+        <section class="client-section" id="client-section">
+            <h2>Client Information</h2>
+            <div class="client-form">
+                <div class="form-group">
+                    <label for="client-name">Client Name:</label>
+                    <input type="text" id="client-name" placeholder="Enter client name">
+                </div>
+                <div class="form-group">
+                    <label for="client-email">Client Email:</label>
+                    <input type="email" id="client-email" placeholder="Enter client email">
+                </div>
+                <div class="form-group">
+                    <label for="client-company">Company:</label>
+                    <input type="text" id="client-company" placeholder="Enter company name">
+                </div>
+                <div class="form-group">
+                    <label for="project-name">Project Name:</label>
+                    <input type="text" id="project-name" placeholder="Enter project name">
+                </div>
+            </div>
+        </section>
+
+        <section class="calculator-section">
+            <div class="currency-toggle">
+                <label for="currency">Currency:</label>
+                <select id="currency">
+                    <option value="INR">Indian Rupee (₹)</option>
+                    <option value="USD">US Dollar ($)</option>
+                    <option value="CAD">Canadian Dollar (C$)</option>
+                </select>
+                <button class="refresh-rates" id="refresh-rates">Refresh Rates</button>
+                <button class="rate-settings" id="rate-settings">Rate Settings</button>
+            </div>
+            
+            <div class="tab-container">
+                <div class="tab-buttons">
+                    <div class="tab-button active" data-tab="webDev">Web Development</div>
+                    <div class="tab-button" data-tab="design">Graphic Design</div>
+                    <div class="tab-button" data-tab="video">Video Production</div>
+                </div>
+                
+                <div id="webDev" class="tab-content active">
+                    <div class="calculator">
+                        <div class="form-group">
+                            <label for="siteType">Website Type:</label>
+                            <select id="siteType">
+                                <option value="landing">Single Page / Landing Page</option>
+                                <option value="business">Basic Business Website (2-5 pages)</option>
+                                <option value="advanced">Advanced Business Website (6-10 pages)</option>
+                                <option value="catalog">Product Catalog</option>
+                                <option value="ecommerce">Simple E-commerce</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="pages">Number of Pages:</label>
+                            <input type="number" id="pages" min="1" value="1">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Features Needed:</label>
+                            <div class="checkbox-group">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="contactForm">
+                                    <label for="contactForm">Contact Form</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="gallery">
+                                    <label for="gallery">Image Gallery</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="responsive">
+                                    <label for="responsive">Responsive Design</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="slideshow">
+                                    <label for="slideshow">Slideshow/Carousel</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="map">
+                                    <label for="map">Google Map Integration</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="seo">
+                                    <label for="seo">Basic SEO Setup</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="social">
+                                    <label for="social">Social Media Integration</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="analytics">
+                                    <label for="analytics">Analytics Setup</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="firebase">
+                                    <label for="firebase">Firebase Backend</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="fireAuth">
+                                    <label for="fireAuth">Firebase Authentication</label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="complexity">Design Complexity:</label>
+                            <select id="complexity">
+                                <option value="simple">Simple (Basic styling)</option>
+                                <option value="moderate" selected>Moderate (Custom styling)</option>
+                                <option value="complex">Complex (Advanced animations/effects)</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="backendComplexity">Backend Requirements:</label>
+                            <select id="backendComplexity">
+                                <option value="none">None - Static Website</option>
+                                <option value="basic">Basic - Simple Data Storage</option>
+                                <option value="medium">Medium - User Accounts & Data</option>
+                                <option value="complex">Complex - Advanced Features & Rules</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="timeline">Timeline:</label>
+                            <select id="timeline">
+                                <option value="standard">Standard (2-4 weeks)</option>
+                                <option value="rush">Rush (1-2 weeks, +20%)</option>
+                                <option value="urgent">Urgent (Less than 1 week, +35%)</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="maintenance">Maintenance Package:</label>
+                            <select id="maintenance">
+                                <option value="none">None</option>
+                                <option value="basic">Basic (Updates, backups)</option>
+                                <option value="standard">Standard (Updates, backups, minor changes)</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="clientProfile">Client Profile:</label>
+                            <select id="clientProfile">
+                                <option value="startup">Startup/Small Business (-20%)</option>
+                                <option value="standard" selected>Standard Rate</option>
+                                <option value="corporate">Corporate Client (+30%)</option>
+                                <option value="enterprise">Enterprise Client (+50%)</option>
+                            </select>
+                        </div>
+                        
+                        <button id="calculate-web-price" class="calculate-button">Calculate Web Development Price</button>
+                    </div>
+                </div>
+                
+                <div id="design" class="tab-content">
+                    <div class="calculator">
+                        <div class="form-group">
+                            <label for="designType">Project Type:</label>
+                            <select id="designType">
+                                <option value="logo">Logo Design</option>
+                                <option value="branding">Brand Identity Package</option>
+                                <option value="social">Social Media Graphics</option>
+                                <option value="banner">Website Banner/Header</option>
+                                <option value="print">Print Materials (Brochure, Flyer, etc.)</option>
+                                <option value="packaging">Product Packaging</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="designComplexity">Design Complexity:</label>
+                            <select id="designComplexity">
+                                <option value="basic">Basic (Simple graphics, minimal elements)</option>
+                                <option value="standard" selected>Standard (Custom graphics, multiple elements)</option>
+                                <option value="premium">Premium (Complex illustrations, detailed work)</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="revisions">Number of Revision Rounds:</label>
+                            <select id="revisions">
+                                <option value="2">2 Revisions</option>
+                                <option value="3" selected>3 Revisions</option>
+                                <option value="unlimited">Unlimited Revisions (+30%)</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="designTimeline">Timeline:</label>
+                            <select id="designTimeline">
+                                <option value="standard">Standard (5-7 days)</option>
+                                <option value="rush">Rush (2-4 days, +20%)</option>
+                                <option value="urgent">Urgent (24-48 hours, +35%)</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Additional Deliverables:</label>
+                            <div class="checkbox-group">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="sourceFiles">
+                                    <label for="sourceFiles">Source Files</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="variations">
+                                    <label for="variations">Multiple Variations</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="socialSizes">
+                                    <label for="socialSizes">Social Media Sizes</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="printReady">
+                                    <label for="printReady">Print-Ready Files</label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="aiAssisted">AI Assistance Level:</label>
+                            <select id="aiAssisted">
+                                <option value="none">None (100% Custom Design)</option>
+                                <option value="partial">Partial (AI-assisted concepts, manual refinement)</option>
+                                <option value="heavy">Heavy (AI-generated with professional adjustments)</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="designClientProfile">Client Profile:</label>
+                            <select id="designClientProfile">
+                                <option value="startup">Startup/Small Business (-20%)</option>
+                                <option value="standard" selected>Standard Rate</option>
+                                <option value="corporate">Corporate Client (+30%)</option>
+                                <option value="enterprise">Enterprise Client (+50%)</option>
+                            </select>
+                        </div>
+                        
+                        <button id="calculate-design-price" class="calculate-button">Calculate Design Price</button>
+                    </div>
+                </div>
+                
+                <div id="video" class="tab-content">
+                    <div class="calculator">
+                        <div class="form-group">
+                            <label for="videoType">Video Type:</label>
+                            <select id="videoType">
+                                <option value="explainer">Explainer Video</option>
+                                <option value="promo">Promotional Video</option>
+                                <option value="social">Social Media Video</option>
+                                <option value="tutorial">Tutorial/How-To</option>
+                                <option value="testimonial">Testimonial/Interview</option>
+                                <option value="corporate">Corporate Video</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="videoDuration">Duration:</label>
+                            <select id="videoDuration">
+                                <option value="short">Short (30-60 seconds)</option>
+                                <option value="medium" selected>Medium (1-3 minutes)</option>
+                                <option value="long">Long (3-5 minutes)</option>
+                                <option value="extended">Extended (5+ minutes)</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="videoComplexity">Production Complexity:</label>
+                            <select id="videoComplexity">
+                                <option value="basic">Basic (Simple editing, minimal graphics)</option>
+                                <option value="standard" selected>Standard (Professional editing, some graphics)</option>
+                                <option value="premium">Premium (Advanced editing, animations, effects)</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Additional Features:</label>
+                            <div class="checkbox-group">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="scriptwriting">
+                                    <label for="scriptwriting">Script Writing</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="voiceover">
+                                    <label for="voiceover">Professional Voiceover</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="music">
+                                    <label for="music">Licensed Music</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="animation">
+                                    <label for="animation">Custom Animation</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="captions">
+                                    <label for="captions">Subtitles/Captions</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="multiple-formats">
+                                    <label for="multiple-formats">Multiple Format Outputs</label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="videoTimeline">Timeline:</label>
+                            <select id="videoTimeline">
+                                <option value="standard">Standard (1-2 weeks)</option>
+                                <option value="rush">Rush (3-5 days, +25%)</option>
+                                <option value="urgent">Urgent (1-2 days, +50%)</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="videoRevisions">Revision Rounds:</label>
+                            <select id="videoRevisions">
+                                <option value="2">2 Rounds</option>
+                                <option value="3" selected>3 Rounds</option>
+                                <option value="unlimited">Unlimited (+40%)</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="videoClientProfile">Client Profile:</label>
+                            <select id="videoClientProfile">
+                                <option value="startup">Startup/Small Business (-20%)</option>
+                                <option value="standard" selected>Standard Rate</option>
+                                <option value="corporate">Corporate Client (+30%)</option>
+                                <option value="enterprise">Enterprise Client (+50%)</option>
+                            </select>
+                        </div>
+                        
+                        <button id="calculate-video-price" class="calculate-button">Calculate Video Production Price</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="resultArea" class="result-section" style="display: none;">
+            <div class="result">
+                <h2>Quote Summary</h2>
+                <div class="client-info-display">
+                    <p><strong>Client:</strong> <span id="summary-client-name">-</span></p>
+                    <p><strong>Project:</strong> <span id="summary-project-name">-</span></p>
+                    <p><strong>Date:</strong> <span id="summary-date">-</span></p>
+                </div>
+                <div class="price-display">
+                    <h3>Estimated Price</h3>
+                    <div class="price" id="totalPrice">$0</div>
+                    <p id="resultDescription">This estimate includes the base development with all requested features.</p>
+                    <div class="takeHome" id="takeHomePrice" style="display: none;">
+                        Take-home amount: ₹0
+                    </div>
+                </div>
+                <div class="action-buttons">
+                    <button id="save-quote" class="action-button">Save Quote</button>
+                    <button id="export-pdf" class="action-button">Export as PDF</button>
+                    <button id="email-client" class="action-button">Email to Client</button>
+                </div>
+            </div>
+            
+            <div class="breakdown">
+                <h3>Price Breakdown</h3>
+                <div id="priceBreakdown"></div>
+            </div>
+            
+            <div class="client-feedback">
+                <h3>Client Feedback</h3>
+                <div class="feedback-form">
+                    <div class="form-group">
+                        <label for="discount-amount">Apply Discount:</label>
+                        <div class="discount-controls">
+                            <input type="number" id="discount-amount" min="0" max="100" placeholder="Enter amount">
+                            <select id="discount-type">
+                                <option value="percentage">%</option>
+                                <option value="fixed">Fixed Amount</option>
+                            </select>
+                            <button id="apply-discount" class="mini-button">Apply</button>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="client-notes">Notes from Client:</label>
+                        <textarea id="client-notes" placeholder="Enter any client feedback or special requests"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="internal-notes">Internal Notes:</label>
+                        <textarea id="internal-notes" placeholder="Notes visible only to your team"></textarea>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="quote-history" id="quote-history" style="display: none;">
+            <h2>Quote History</h2>
+            <div class="history-controls">
+                <input type="text" id="search-quotes" placeholder="Search quotes...">
+                <select id="filter-quotes">
+                    <option value="all">All Quotes</option>
+                    <option value="pending">Pending</option>
+                    <option value="approved">Approved</option>
+                    <option value="rejected">Rejected</option>
+                </select>
+            </div>
+            <div class="quotes-list" id="quotes-list">
+                <!-- Quote history will be populated here -->
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <p>&copy; 2025 Freelancer Pricing Platform. All rights reserved.</p>
+    </footer>
+    
+    <!-- Modal templates -->
+    <div id="rate-settings-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Rate Settings</h2>
+            <div id="rate-settings-container">
+                <!-- Rate settings content will be populated here -->
+            </div>
+        </div>
+    </div>
+    
+    <div id="login-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Login</h2>
+            <div class="login-form">
+                <div class="form-group">
+                    <label for="login-email">Email:</label>
+                    <input type="email" id="login-email" placeholder="Enter your email">
+                </div>
+                <div class="form-group">
+                    <label for="login-password">Password:</label>
+                    <input type="password" id="login-password" placeholder="Enter your password">
+                </div>
+                <button id="login-button">Login</button>
+                <p>Don't have an account? <a href="#" id="register-link">Register</a></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Load JavaScript files -->
+    <script src="js/firebase-config.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/calculator.js"></script>
+    <script src="js/client-manager.js"></script>
+    <script src="js/team-manager.js"></script>
+    <script src="js/pdf-generator.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
