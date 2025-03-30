@@ -429,6 +429,80 @@
             <div class="quotes-list" id="quotes-list">
                 <!-- Quote history will be populated here -->
             </div>
+            <section class="team-manager" id="team-manager" style="display: none;">
+    <h2>Team Management</h2>
+    
+    <div class="team-controls">
+        <button id="add-team-member" class="action-button"><i class="fas fa-plus"></i> Add Team Member</button>
+        <button id="calculate-revenue-sharing" class="action-button"><i class="fas fa-chart-pie"></i> Calculate Revenue Sharing</button>
+    </div>
+    
+    <div class="team-members-list" id="team-members-list">
+        <div class="team-header">
+            <div class="team-member-name">Name</div>
+            <div class="team-member-role">Role</div>
+            <div class="team-member-rate">Rate</div>
+            <div class="team-member-share">Share %</div>
+            <div class="team-member-actions">Actions</div>
+        </div>
+        <div id="team-members-container">
+            <!-- Team members will be listed here -->
+            <div class="no-team-members">No team members added yet. Add your first team member to get started.</div>
+        </div>
+    </div>
+    
+    <div class="revenue-sharing-results" id="revenue-sharing-results" style="display: none;">
+        <h3>Revenue Sharing Calculation</h3>
+        <div class="input-group">
+            <label for="project-total">Project Total:</label>
+            <input type="number" id="project-total" min="0" step="100">
+            <button id="calculate-shares" class="mini-button">Calculate</button>
+        </div>
+        <div class="shares-breakdown" id="shares-breakdown">
+            <!-- Shares breakdown will be displayed here -->
+        </div>
+    </div>
+</section>
+
+<!-- Team Member Modal -->
+<div id="team-member-modal" class="modal">
+    <div class="modal-content">
+        <span class="close-modal">&times;</span>
+        <h2 id="team-modal-title">Add Team Member</h2>
+        <div class="team-member-form">
+            <input type="hidden" id="team-member-id">
+            <div class="form-group">
+                <label for="team-member-name">Name:</label>
+                <input type="text" id="team-member-name" placeholder="Enter team member name" required>
+            </div>
+            <div class="form-group">
+                <label for="team-member-email">Email:</label>
+                <input type="email" id="team-member-email" placeholder="Enter email address">
+            </div>
+            <div class="form-group">
+                <label for="team-member-role">Role:</label>
+                <select id="team-member-role">
+                    <option value="developer">Web Developer</option>
+                    <option value="designer">Graphic Designer</option>
+                    <option value="videoProducer">Video Producer</option>
+                    <option value="projectManager">Project Manager</option>
+                    <option value="marketing">Marketing</option>
+                    <option value="admin">Administrative</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="team-member-rate">Hourly Rate (₹):</label>
+                <input type="number" id="team-member-rate" min="0" step="50" value="500">
+            </div>
+            <div class="form-group">
+                <label for="team-member-share">Revenue Share (%):</label>
+                <input type="number" id="team-member-share" min="0" max="100" step="1" value="10">
+            </div>
+            <button id="save-team-member" class="action-button">Save Team Member</button>
+        </div>
+    </div>
+</div>
         </section>
     </main>
     
