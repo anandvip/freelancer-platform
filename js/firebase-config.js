@@ -7,14 +7,13 @@
 
 // Your Firebase configuration object
 const firebaseConfig = {
-    apiKey: "YOUR_API_KEY",
-    authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-    projectId: "YOUR_PROJECT_ID",
-    storageBucket: "YOUR_PROJECT_ID.appspot.com",
-    messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-    appId: "YOUR_APP_ID"
-};
-
+    apiKey: "AIzaSyAKoE80NGi-FeS463s4H89lFtPU4x8PIbs",
+    authDomain: "sample-firebase-ai-app-1-4eff8.firebaseapp.com",
+    projectId: "sample-firebase-ai-app-1-4eff8",
+    storageBucket: "sample-firebase-ai-app-1-4eff8.firebasestorage.app",
+    messagingSenderId: "869552079174",
+    appId: "1:869552079174:web:8cb882bd74e94955216547"
+  };
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
