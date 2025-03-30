@@ -555,5 +555,140 @@ function calculatePrice(type) {
     document.getElementById('summary-date').textContent = new Date().toLocaleDateString();
 }
 </script>
+    <script>
+function calculatePrice(type) {
+    // Basic implementation to show functionality
+    let basePrice = 0;
+    const breakdownItems = [];
+    
+    if (type === 'web') {
+        const siteType = document.getElementById('siteType').value;
+        basePrice = siteType === 'landing' ? 3000 : 
+                   siteType === 'business' ? 6000 :
+                   siteType === 'advanced' ? 10000 :
+                   siteType === 'catalog' ? 12000 : 18000;
+        
+        // Add base price to breakdown
+        breakdownItems.push({
+            name: `Base Price (${siteType === 'landing' ? 'Landing Page' : 
+                   siteType === 'business' ? 'Basic Business Site' :
+                   siteType === 'advanced' ? 'Advanced Business Site' :
+                   siteType === 'catalog' ? 'Product Catalog' : 'Simple E-commerce'})`,
+            price: basePrice
+        });
+        
+        // Check for features
+        if (document.getElementById('contactForm').checked) {
+            breakdownItems.push({ name: 'Contact Form', price: 500 });
+        }
+        if (document.getElementById('gallery').checked) {
+            breakdownItems.push({ name: 'Image Gallery', price: 1000 });
+        }
+        if (document.getElementById('responsive').checked) {
+            breakdownItems.push({ name: 'Responsive Design', price: 1500 });
+        }
+        if (document.getElementById('firebase').checked) {
+            breakdownItems.push({ name: 'Firebase Backend', price: 3500 });
+        }
+        if (document.getElementById('fireAuth').checked) {
+            breakdownItems.push({ name: 'Firebase Authentication', price: 2500 });
+        }
+    } else if (type === 'design') {
+        const designType = document.getElementById('designType').value;
+        basePrice = designType === 'logo' ? 5000 :
+                   designType === 'branding' ? 12000 :
+                   designType === 'social' ? 3000 :
+                   designType === 'banner' ? 2500 :
+                   designType === 'print' ? 4000 : 8000;
+        
+        // Add base price to breakdown
+        breakdownItems.push({
+            name: `Base Price (${designType === 'logo' ? 'Logo Design' : 
+                   designType === 'branding' ? 'Brand Identity Package' :
+                   designType === 'social' ? 'Social Media Graphics' :
+                   designType === 'banner' ? 'Website Banner/Header' :
+                   designType === 'print' ? 'Print Materials' : 'Product Packaging'})`,
+            price: basePrice
+        });
+        
+        // Check for features
+        if (document.getElementById('sourceFiles').checked) {
+            breakdownItems.push({ name: 'Source Files', price: 1000 });
+        }
+        if (document.getElementById('variations').checked) {
+            breakdownItems.push({ name: 'Multiple Variations', price: 2000 });
+        }
+    } else if (type === 'video') {
+        const videoType = document.getElementById('videoType').value;
+        basePrice = videoType === 'explainer' ? 15000 :
+                   videoType === 'promo' ? 12000 :
+                   videoType === 'social' ? 8000 :
+                   videoType === 'tutorial' ? 10000 :
+                   videoType === 'testimonial' ? 7000 : 20000;
+        
+        // Add base price to breakdown
+        breakdownItems.push({
+            name: `Base Price (${videoType === 'explainer' ? 'Explainer Video' : 
+                   videoType === 'promo' ? 'Promotional Video' :
+                   videoType === 'social' ? 'Social Media Video' :
+                   videoType === 'tutorial' ? 'Tutorial/How-To' :
+                   videoType === 'testimonial' ? 'Testimonial/Interview' : 'Corporate Video'})`,
+            price: basePrice
+        });
+        
+        // Check for features
+        if (document.getElementById('scriptwriting').checked) {
+            breakdownItems.push({ name: 'Script Writing', price: 3000 });
+        }
+        if (document.getElementById('voiceover').checked) {
+            breakdownItems.push({ name: 'Professional Voiceover', price: 4000 });
+        }
+    }
+    
+    // Calculate total
+    let total = basePrice;
+    breakdownItems.forEach(item => {
+        if (item.name !== breakdownItems[0].name) { // Skip base price which we already counted
+            total += item.price;
+        }
+    });
+    
+    // Display the result
+    const currency = document.getElementById('currency').value;
+    const currencySymbol = currency === 'INR' ? '₹' : currency === 'USD' ? '$' : 'C$';
+    
+    document.getElementById('totalPrice').textContent = `${currencySymbol}${total.toLocaleString()}`;
+    document.getElementById('resultArea').style.display = 'block';
+    
+    // Add client info to summary
+    document.getElementById('summary-client-name').textContent = 
+        document.getElementById('client-name').value || 'Client';
+    document.getElementById('summary-project-name').textContent = 
+        document.getElementById('project-name').value || 'Project';
+    document.getElementById('summary-date').textContent = new Date().toLocaleDateString();
+    
+    // Generate breakdown
+    generateBreakdown(breakdownItems, total, currencySymbol);
+}
+
+function generateBreakdown(items, total, currencySymbol) {
+    const breakdownContainer = document.getElementById('priceBreakdown');
+    breakdownContainer.innerHTML = '';
+    
+    // Add each item
+    items.forEach(item => {
+        const div = document.createElement('div');
+        div.className = 'breakdown-item';
+        div.innerHTML = `<span>${item.name}</span><span>${currencySymbol}${item.price.toLocaleString()}</span>`;
+        breakdownContainer.appendChild(div);
+    });
+    
+    // Add total
+    const totalDiv = document.createElement('div');
+    totalDiv.className = 'breakdown-item';
+    totalDiv.innerHTML = `<span>TOTAL</span><span>${currencySymbol}${total.toLocaleString()}</span>`;
+    breakdownContainer.appendChild(totalDiv);
+}
+</script>
 </body>
 </html>
