@@ -1,7 +1,12 @@
 /**
  * Main Application
  * Entry point that coordinates all modules
- */
+ */// Export app functions to global scope
+window.app = {
+    initApp,
+    showLoginModal,
+    showRegisterModal
+};
 
 // Initialize the application
 document.addEventListener('DOMContentLoaded', initApp);
