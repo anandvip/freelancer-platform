@@ -623,3 +623,103 @@ button:hover {
         width: 100%;
     }
 }
+
+/* Team Manager Styles */
+.team-manager {
+    background-color: white;
+    padding: 20px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    margin-bottom: 20px;
+}
+
+.team-controls {
+    display: flex;
+    margin-bottom: 20px;
+    gap: 10px;
+}
+
+.team-members-list {
+    background-color: #f9f9f9;
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+
+.team-header {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+    background-color: var(--dark-color);
+    color: white;
+    padding: 10px;
+    font-weight: bold;
+}
+
+.team-member-item {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+    align-items: center;
+}
+
+.team-member-item:last-child {
+    border-bottom: none;
+}
+
+.team-member-item:hover {
+    background-color: #f1f1f1;
+}
+
+.team-member-actions {
+    display: flex;
+    gap: 5px;
+}
+
+.no-team-members {
+    padding: 20px;
+    text-align: center;
+    color: var(--gray-color);
+    font-style: italic;
+}
+
+.revenue-sharing-results {
+    background-color: #f9f9f9;
+    border-radius: var(--border-radius);
+    padding: 20px;
+    margin-top: 20px;
+}
+
+.input-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.input-group label {
+    margin-right: 10px;
+    margin-bottom: 0;
+}
+
+.input-group input {
+    width: 200px;
+    margin-right: 10px;
+}
+
+.shares-breakdown {
+    background-color: white;
+    border-radius: var(--border-radius);
+    padding: 15px;
+}
+
+.share-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px dashed #ddd;
+}
+
+.share-item:last-child {
+    border-bottom: none;
+    font-weight: bold;
+}
