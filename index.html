@@ -474,5 +474,86 @@
     <script src="js/team-manager.js"></script>
     <script src="js/pdf-generator.js"></script>
     <script src="js/app.js"></script>
+    <script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Direct tab switching implementation
+    const tabButtons = document.querySelectorAll('.tab-button');
+    
+    tabButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            // Get the tab ID
+            const tabId = this.getAttribute('data-tab');
+            
+            // Remove active class from all buttons and contents
+            document.querySelectorAll('.tab-button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            // Add active class to clicked button and corresponding content
+            this.classList.add('active');
+            document.getElementById(tabId).classList.add('active');
+        });
+    });
+    
+    // Setup calculate buttons
+    document.getElementById('calculate-web-price').addEventListener('click', function() {
+        calculatePrice('web');
+    });
+    
+    document.getElementById('calculate-design-price').addEventListener('click', function() {
+        calculatePrice('design');
+    });
+    
+    document.getElementById('calculate-video-price').addEventListener('click', function() {
+        calculatePrice('video');
+    });
+});
+
+// Simplified price calculation function
+function calculatePrice(type) {
+    // Basic implementation to show functionality
+    let basePrice = 0;
+    
+    if (type === 'web') {
+        const siteType = document.getElementById('siteType').value;
+        basePrice = siteType === 'landing' ? 3000 : 
+                   siteType === 'business' ? 6000 :
+                   siteType === 'advanced' ? 10000 :
+                   siteType === 'catalog' ? 12000 : 18000;
+    } else if (type === 'design') {
+        const designType = document.getElementById('designType').value;
+        basePrice = designType === 'logo' ? 5000 :
+                   designType === 'branding' ? 12000 :
+                   designType === 'social' ? 3000 :
+                   designType === 'banner' ? 2500 :
+                   designType === 'print' ? 4000 : 8000;
+    } else if (type === 'video') {
+        const videoType = document.getElementById('videoType').value;
+        basePrice = videoType === 'explainer' ? 15000 :
+                   videoType === 'promo' ? 12000 :
+                   videoType === 'social' ? 8000 :
+                   videoType === 'tutorial' ? 10000 :
+                   videoType === 'testimonial' ? 7000 : 20000;
+    }
+    
+    // Display the result
+    const currency = document.getElementById('currency').value;
+    const currencySymbol = currency === 'INR' ? '₹' : currency === 'USD' ? '$' : 'C$';
+    
+    document.getElementById('totalPrice').textContent = `${currencySymbol}${basePrice.toLocaleString()}`;
+    document.getElementById('resultArea').style.display = 'block';
+    
+    // Add client info to summary
+    document.getElementById('summary-client-name').textContent = 
+        document.getElementById('client-name').value || 'Client';
+    document.getElementById('summary-project-name').textContent = 
+        document.getElementById('project-name').value || 'Project';
+    document.getElementById('summary-date').textContent = new Date().toLocaleDateString();
+}
+</script>
 </body>
 </html>
