@@ -199,3 +199,12 @@ function updateCurrencyNotes() {
                 <li>Highlight how Firebase authentication can create customer accounts for their business</li>
                 <li>Explain how Firebase can store customer data securely without expensive database servers</li>
             </ul>
+            `;
+    } else if (currency === 'USD') {
+        // USD currency notes
+    } else if (currency === 'CAD') {
+        // CAD currency notes
+    }
+    
+    // ... remaining function code
+}
