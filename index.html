@@ -690,5 +690,138 @@ function generateBreakdown(items, total, currencySymbol) {
     breakdownContainer.appendChild(totalDiv);
 }
 </script>
+    <!-- Debug Console -->
+<div id="debug-console" style="position: fixed; bottom: 0; right: 0; width: 400px; height: 300px; background: rgba(0,0,0,0.8); color: #00ff00; font-family: monospace; font-size: 12px; overflow: auto; padding: 10px; border-top-left-radius: 8px; display: none; z-index: 9999;">
+    <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+        <strong>Debug Console</strong>
+        <div>
+            <button onclick="clearDebugLogs()" style="background: #444; color: white; border: none; padding: 2px 8px; margin-right: 5px;">Clear</button>
+            <button onclick="toggleDebugConsole()" style="background: #444; color: white; border: none; padding: 2px 8px;">×</button>
+        </div>
+    </div>
+    <div id="debug-logs"></div>
+</div>
+
+<!-- Debug Toggle Button -->
+<button id="debug-toggle" onclick="toggleDebugConsole()" style="position: fixed; bottom: 10px; right: 10px; background: #3498db; color: white; border: none; border-radius: 4px; padding: 5px 10px; z-index: 9999;">Debug</button>
+
+<script>
+// Debug console functionality
+function toggleDebugConsole() {
+    const console = document.getElementById('debug-console');
+    console.style.display = console.style.display === 'none' ? 'block' : 'none';
+}
+
+function clearDebugLogs() {
+    document.getElementById('debug-logs').innerHTML = '';
+}
+
+function debugLog(message) {
+    const logsContainer = document.getElementById('debug-logs');
+    const logEntry = document.createElement('div');
+    logEntry.innerHTML = `<span style="color: #888;">[${new Date().toLocaleTimeString()}]</span> ${message}`;
+    logsContainer.appendChild(logEntry);
+    logsContainer.scrollTop = logsContainer.scrollHeight;
+}
+
+// Debug checks
+document.addEventListener('DOMContentLoaded', function() {
+    debugLog('<b>Debug Console Initialized</b>');
+    
+    // Check loaded modules
+    debugLog('Checking modules:');
+    debugLog(`- utils: ${typeof window.utils !== 'undefined' ? 'LOADED' : 'MISSING'}`);
+    debugLog(`- calculator: ${typeof window.calculator !== 'undefined' ? 'LOADED' : 'MISSING'}`);
+    debugLog(`- clientManager: ${typeof window.clientManager !== 'undefined' ? 'LOADED' : 'MISSING'}`);
+    debugLog(`- teamManager: ${typeof window.teamManager !== 'undefined' ? 'LOADED' : 'MISSING'}`);
+    debugLog(`- pdfGenerator: ${typeof window.pdfGenerator !== 'undefined' ? 'LOADED' : 'MISSING'}`);
+    debugLog(`- app: ${typeof window.app !== 'undefined' ? 'LOADED' : 'MISSING'}`);
+    
+    // Check key functions
+    if (typeof window.calculator !== 'undefined') {
+        debugLog('Calculator functions:');
+        debugLog(`- calculateWebPrice: ${typeof window.calculator.calculateWebPrice === 'function' ? 'AVAILABLE' : 'MISSING'}`);
+        debugLog(`- calculateDesignPrice: ${typeof window.calculator.calculateDesignPrice === 'function' ? 'AVAILABLE' : 'MISSING'}`);
+        debugLog(`- calculateVideoPrice: ${typeof window.calculator.calculateVideoPrice === 'function' ? 'AVAILABLE' : 'MISSING'}`);
+    }
+    
+    // Check if event listeners were set up
+    const webCalcBtn = document.getElementById('calculate-web-price');
+    if (webCalcBtn) {
+        debugLog(`calculate-web-price button: FOUND`);
+    } else {
+        debugLog(`calculate-web-price button: NOT FOUND`);
+    }
+    
+    // Check event handlers
+    setTimeout(function() {
+        if (typeof getEventListeners === 'function') {
+            const webCalcBtn = document.getElementById('calculate-web-price');
+            const listeners = getEventListeners(webCalcBtn);
+            debugLog(`Event listeners for calculate button: ${listeners.click ? listeners.click.length : 0}`);
+        } else {
+            debugLog('Cannot check event listeners (only works in Chrome DevTools)');
+        }
+    }, 1000);
+});
+</script>
+    <script>
+// Fix for tab switching
+document.addEventListener('DOMContentLoaded', function() {
+    const tabButtons = document.querySelectorAll('.tab-button');
+    
+    tabButtons.forEach(button => {
+        button.onclick = function() {
+            const tabId = this.getAttribute('data-tab');
+            
+            // Remove active class from all tabs
+            document.querySelectorAll('.tab-button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            // Add active class to clicked tab
+            this.classList.add('active');
+            
+            // Show the corresponding tab content
+            const tabContent = document.getElementById(tabId);
+            if (tabContent) {
+                tabContent.classList.add('active');
+            }
+        };
+    });
+    
+    // Direct connection to calculator buttons
+    document.getElementById('calculate-web-price').onclick = function() {
+        if (typeof window.calculator !== 'undefined' && typeof window.calculator.calculateWebPrice === 'function') {
+            window.calculator.calculateWebPrice();
+        } else {
+            // Fallback calculation
+            alert('Calculator module not available. Please check JavaScript console.');
+        }
+    };
+    
+    document.getElementById('calculate-design-price').onclick = function() {
+        if (typeof window.calculator !== 'undefined' && typeof window.calculator.calculateDesignPrice === 'function') {
+            window.calculator.calculateDesignPrice();
+        } else {
+            // Fallback calculation
+            alert('Calculator module not available. Please check JavaScript console.');
+        }
+    };
+    
+    document.getElementById('calculate-video-price').onclick = function() {
+        if (typeof window.calculator !== 'undefined' && typeof window.calculator.calculateVideoPrice === 'function') {
+            window.calculator.calculateVideoPrice();
+        } else {
+            // Fallback calculation
+            alert('Calculator module not available. Please check JavaScript console.');
+        }
+    };
+});
+</script>
 </body>
 </html>
