@@ -893,6 +893,21 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }, 1000);
 });
+    // Event logging function for debug console
+function logEvent(eventType, details) {
+    if (document.getElementById('debug-logs')) {
+        const timestamp = new Date().toLocaleTimeString();
+        let message = `<span style="color: #4caf50;">[EVENT: ${eventType}]</span> `;
+        
+        if (details) {
+            message += typeof details === 'object' 
+                ? JSON.stringify(details) 
+                : details;
+        }
+        
+        debugLog(message);
+    }
+}
 </script>
     <script>
 // Fix for tab switching
