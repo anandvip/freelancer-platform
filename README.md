@@ -1,3 +1,4 @@
+## Project Structure
 freelancer-pricing-platform/
 ├── index.html                  # Main HTML file
 ├── css/
@@ -11,5 +12,5 @@ freelancer-pricing-platform/
 │   ├── pdf-generator.js        # PDF quote generation
 │   └── utils.js                # Utility functions
 └── assets/
-    ├── logo.png                # Your logo placeholder
-    └── icons/                  # UI icons
+├── logo.png                # Your logo placeholder
+└── icons/                  # UI icons
