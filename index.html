@@ -429,12 +429,13 @@
             <div class="quotes-list" id="quotes-list">
                 <!-- Quote history will be populated here -->
             </div>
-            <section class="team-manager" id="team-manager" style="display: none;">
+<section class="team-manager" id="team-manager" style="display: none;">
     <h2>Team Management</h2>
     
     <div class="team-controls">
         <button id="add-team-member" class="action-button"><i class="fas fa-plus"></i> Add Team Member</button>
         <button id="calculate-revenue-sharing" class="action-button"><i class="fas fa-chart-pie"></i> Calculate Revenue Sharing</button>
+        <button id="view-team-visualization" class="action-button"><i class="fas fa-chart-bar"></i> Team Visualization</button>
     </div>
     
     <div class="team-members-list" id="team-members-list">
@@ -451,11 +452,20 @@
         </div>
     </div>
     
+    <div id="team-visualization-container" style="display: none;">
+        <!-- Team visualization will be displayed here -->
+    </div>
+    
     <div class="revenue-sharing-results" id="revenue-sharing-results" style="display: none;">
         <h3>Revenue Sharing Calculation</h3>
         <div class="input-group">
             <label for="project-total">Project Total:</label>
             <input type="number" id="project-total" min="0" step="100">
+            <select id="project-currency">
+                <option value="INR">₹ (INR)</option>
+                <option value="USD">$ (USD)</option>
+                <option value="CAD">C$ (CAD)</option>
+            </select>
             <button id="calculate-shares" class="mini-button">Calculate</button>
         </div>
         <div class="shares-breakdown" id="shares-breakdown">
@@ -480,6 +490,42 @@
                 <input type="email" id="team-member-email" placeholder="Enter email address">
             </div>
             <div class="form-group">
+                <label for="team-member-country">Country:</label>
+                <input type="text" id="team-member-country" placeholder="Enter country">
+            </div>
+            <div class="form-group">
+                <label for="team-member-timezone">Time Zone:</label>
+                <select id="team-member-timezone">
+                    <option value="">Select Time Zone</option>
+                    <option value="UTC-12">UTC-12</option>
+                    <option value="UTC-11">UTC-11</option>
+                    <option value="UTC-10">UTC-10</option>
+                    <option value="UTC-9">UTC-9</option>
+                    <option value="UTC-8">UTC-8</option>
+                    <option value="UTC-7">UTC-7</option>
+                    <option value="UTC-6">UTC-6</option>
+                    <option value="UTC-5">UTC-5</option>
+                    <option value="UTC-4">UTC-4</option>
+                    <option value="UTC-3">UTC-3</option>
+                    <option value="UTC-2">UTC-2</option>
+                    <option value="UTC-1">UTC-1</option>
+                    <option value="UTC+0">UTC+0</option>
+                    <option value="UTC+1">UTC+1</option>
+                    <option value="UTC+2">UTC+2</option>
+                    <option value="UTC+3">UTC+3</option>
+                    <option value="UTC+4">UTC+4</option>
+                    <option value="UTC+5">UTC+5</option>
+                    <option value="UTC+5:30">UTC+5:30 (India)</option>
+                    <option value="UTC+6">UTC+6</option>
+                    <option value="UTC+7">UTC+7</option>
+                    <option value="UTC+8">UTC+8</option>
+                    <option value="UTC+9">UTC+9</option>
+                    <option value="UTC+10">UTC+10</option>
+                    <option value="UTC+11">UTC+11</option>
+                    <option value="UTC+12">UTC+12</option>
+                </select>
+            </div>
+            <div class="form-group">
                 <label for="team-member-role">Role:</label>
                 <select id="team-member-role">
                     <option value="developer">Web Developer</option>
@@ -487,6 +533,8 @@
                     <option value="videoProducer">Video Producer</option>
                     <option value="projectManager">Project Manager</option>
                     <option value="marketing">Marketing</option>
+                    <option value="seo">SEO Specialist</option>
+                    <option value="contentWriter">Content Writer</option>
                     <option value="admin">Administrative</option>
                     <option value="other">Other</option>
                 </select>
@@ -499,10 +547,17 @@
                 <label for="team-member-share">Revenue Share (%):</label>
                 <input type="number" id="team-member-share" min="0" max="100" step="1" value="10">
             </div>
+            <div class="form-group">
+                <label>Skills:</label>
+                <div id="team-member-skills" class="skills-container">
+                    <!-- Skill inputs will be generated dynamically -->
+                </div>
+            </div>
             <button id="save-team-member" class="action-button">Save Team Member</button>
         </div>
     </div>
 </div>
+            
         </section>
     </main>
     
